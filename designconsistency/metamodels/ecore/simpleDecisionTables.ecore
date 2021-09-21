@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="SimpleDecisionTables" nsURI="SimpleDecisionTables" nsPrefix="">
+  <eAnnotations source="ns">
+    <details key="uri" value="https://www.hvl.no/past/simpleDT"/>
+    <details key="prefix" value=""/>
+  </eAnnotations>
+  <eClassifiers xsi:type="ecore:EClass" name="DecisionTable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputSideColumns" lowerBound="1"
+        upperBound="-1" eType="#//Column" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputSideColumns" lowerBound="1"
+        upperBound="-1" eType="#//Column" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rows" upperBound="-1" eType="#//Row"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Column">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Row">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cells" lowerBound="2" upperBound="-1"
+        eType="#//Cell" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Cell">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="valueExpression" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="column" eType="#//Column"/>
+  </eClassifiers>
+</ecore:EPackage>

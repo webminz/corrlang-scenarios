@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="SimpleBPMN" nsURI="https://www.hvl.no/past/simpleBPMN" nsPrefix="">
+  <eClassifiers xsi:type="ecore:EClass" name="Diagram">
+    <eAnnotations source="gmf.diagram"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pools" lowerBound="1" upperBound="-1"
+        eType="#//Pool" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="flows" upperBound="-1"
+        eType="#//SequenceFlow" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="dataObjects" upperBound="-1"
+        eType="#//DataObject" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messages" upperBound="-1"
+        eType="#//Message" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DataObject">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="name"/>
+      <details key="figure" value="svg"/>
+      <details key="label.icon" value="false"/>
+      <details key="label.placement" value="external"/>
+      <details key="svg.uri" value="platform:/plugin/SimpleBPMNLang.edit/svg/data_object.svg"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="setValued" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="producers" upperBound="-1"
+        eType="#//Activity" eOpposite="#//Activity/produces"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="consumers" upperBound="-1"
+        eType="#//Activity" eOpposite="#//Activity/consumes"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageSender" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageReceiver" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Message">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="name"/>
+      <details key="figure" value="svg"/>
+      <details key="label.icon" value="false"/>
+      <details key="label.placement" value="external"/>
+      <details key="svg.uri" value="platform:/plugin/SimpleBPMNLang.edit/svg/message_receive.svg"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sender" eType="#//MessageSender">
+      <eAnnotations source="gmf.link">
+        <details key="style" value="dot"/>
+        <details key="target.decoration" value="rhomb"/>
+        <details key="tool.small.bundle" value="SimpleBPMNLang.edit"/>
+        <details key="tool.small.path" value="icons/full/obj16/message_send_start.png"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="recepient" eType="#//MessageReceiver">
+      <eAnnotations source="gmf.link">
+        <details key="style" value="dot"/>
+        <details key="target.decoration" value="closedarrow"/>
+        <details key="tool.small.bundle" value="SimpleBPMNLang.edit"/>
+        <details key="tool.small.path" value="icons/full/obj16/message_send_end.png"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Pool" eSuperTypes="#//MessageSender #//MessageReceiver">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="title"/>
+      <details key="figure" value="rectangle"/>
+      <details key="label.icon" value="false"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
+        eType="#//FlowNode" containment="true">
+      <eAnnotations source="gmf.compartment"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FlowNode" abstract="true">
+    <eAnnotations source="gmf.node">
+      <details key="label" value="name"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outgoing" upperBound="-1"
+        eType="#//SequenceFlow" eOpposite="#//SequenceFlow/src"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="incoming" upperBound="-1"
+        eType="#//SequenceFlow" eOpposite="#//SequenceFlow/trg"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SequenceFlow">
+    <eAnnotations source="gmf.link">
+      <details key="source" value="src"/>
+      <details key="target" value="trg"/>
+      <details key="target.decoration" value="filledclosedarrow"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="src" eType="#//FlowNode"
+        eOpposite="#//FlowNode/outgoing"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="trg" eType="#//FlowNode"
+        eOpposite="#//FlowNode/incoming"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Activity" abstract="true" eSuperTypes="#//FlowNode">
+    <eAnnotations source="gmf.node">
+      <details key="label.placement" value="internal"/>
+      <details key="label.icon" value="true"/>
+      <details key="figure" value="rounded"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="produces" upperBound="-1"
+        eType="#//DataObject" eOpposite="#//DataObject/producers">
+      <eAnnotations source="gmf.link">
+        <details key="style" value="dot"/>
+        <details key="target.decoration" value="arrow"/>
+        <details key="tool.small.bundle" value="SimpleBPMNLang.edit"/>
+        <details key="tool.small.path" value="icons/full/obj16/assoc_end.png"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="consumes" upperBound="-1"
+        eType="#//DataObject" eOpposite="#//DataObject/consumers">
+      <eAnnotations source="gmf.link">
+        <details key="style" value="dot"/>
+        <details key="source.decoration" value="arrow"/>
+        <details key="tool.small.bundle" value="SimpleBPMNLang.edit"/>
+        <details key="tool.small.path" value="icons/full/obj16/assoc_start.png"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ManualActivity" eSuperTypes="#//Activity"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ServiceActivity" eSuperTypes="#//Activity"/>
+  <eClassifiers xsi:type="ecore:EClass" name="BusinessRuleActivity" eSuperTypes="#//Activity"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageSendActivity" eSuperTypes="#//Activity #//MessageSender"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Gateway" abstract="true" eSuperTypes="#//FlowNode">
+    <eAnnotations source="gmf.node">
+      <details key="label.placement" value="none"/>
+      <details key="label.icon" value="false"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="XorGateway" eSuperTypes="#//Gateway">
+    <eAnnotations source="gmf.node">
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/SimpleBPMNLang.edit/svg/xor_gw.svg"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AndGateway" eSuperTypes="#//Gateway">
+    <eAnnotations source="gmf.node">
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/SimpleBPMNLang.edit/svg/and_gw.svg"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EventBasedGateway" eSuperTypes="#//Gateway">
+    <eAnnotations source="gmf.node">
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/SimpleBPMNLang.edit/svg/event_based_gw.svg"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Event" abstract="true" eSuperTypes="#//FlowNode">
+    <eAnnotations source="gmf.node">
+      <details key="label.placement" value="external"/>
+      <details key="label.icon" value="false"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StartEvent" eSuperTypes="#//Event">
+    <eAnnotations source="gmf.node">
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/SimpleBPMNLang.edit/svg/start_event.svg"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EndEvent" eSuperTypes="#//Event">
+    <eAnnotations source="gmf.node">
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/SimpleBPMNLang.edit/svg/end_event.svg"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageEvent" eSuperTypes="#//Event #//MessageReceiver">
+    <eAnnotations source="gmf.node">
+      <details key="figure" value="svg"/>
+      <details key="svg.uri" value="platform:/plugin/SimpleBPMNLang.edit/svg/message_event.svg"/>
+    </eAnnotations>
+  </eClassifiers>
+</ecore:EPackage>

@@ -1,0 +1,46 @@
+scalar DateTime
+
+type Query {
+	diagnosticReports: [DiagnosticReport]
+}
+
+type DiagnosticReport {
+	subject: Patient
+	result: [Observation]
+}
+
+type Identifier {
+    value: String!
+}
+
+type HumanName {
+    text: String!
+}
+
+type Address {
+    text: String!
+}
+
+type Patient {
+	id: Identifier!
+	name: HumanName!
+	contact: [Address]
+	CORRLANG_isStructurallyConsistent: Boolean
+}
+
+type Observation {
+    coding: CodeableConcept
+    valueQuantity: Quantity
+}
+
+type Quantity {
+    value: Float
+    unit: String
+}
+
+type CodeableConcept {
+    code: String!
+    system: String
+}
+
+

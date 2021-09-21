@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="Definitions_1kfl6ff" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="4.6.0">
+  <decision id="Decision_1lki2rf" name=" Consultant">
+    <decisionTable id="DecisionTable_0j6akzf" hitPolicy="FIRST">
+      <input id="Input_1" label="Diagnosis">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>Diagnosis.shortDesc</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_09yn55h" label="PostalCode">
+        <inputExpression id="LiteralExpression_18q48r8" typeRef="string">
+          <text>Address.postalCode</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="PracticionerID" typeRef="string" />
+      <output id="OutputClause_062hj8m" label="Specialization" typeRef="string" />
+      <rule id="DecisionRule_0e65cjs">
+        <inputEntry id="UnaryTests_098i0u6">
+          <text>Essential Hypertension</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_05ie8ii">
+          <text>5....</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1kmasf3">
+          <text>123 456 789</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0zqn4cn">
+          <text>Cardiology</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1yhf28l">
+        <inputEntry id="UnaryTests_1fa7z8t">
+          <text>Bacterial Meningitis</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1wfex2k">
+          <text>5....</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0tzjhh6">
+          <text>911 113 112</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1awu2gq">
+          <text>Neurology</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0arbims">
+        <inputEntry id="UnaryTests_0flv2gx">
+          <text>Complicated migraine</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1o7y2dd">
+          <text>5[1-3]...</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_04frcsi">
+          <text>420 023 007</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1myivs1">
+          <text>Internal Medicione</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0yxzje1">
+        <inputEntry id="UnaryTests_0pdwc2i">
+          <text>Complicated migraine</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_14jkyw6">
+          <text>5[4-9]...</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0zi33lx">
+          <text>987 046 321</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1rznbws">
+          <text>Neurology</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_09mpn2f">
+        <inputEntry id="UnaryTests_1vevk57">
+          <text>Atopic Dematitits</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0fhah7s">
+          <text>5....</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0kavmr6">
+          <text>690 046 046</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0rx13ct">
+          <text>Dermatology</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_1lki2rf">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

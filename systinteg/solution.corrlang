@@ -1,0 +1,95 @@
+endpoint GP {
+    type SERVER
+    at https://fhir.demogp.no/graphql/
+    technology GRAPH_QL
+}
+
+endpoint HOSPITAL {
+    type SERVER
+    at https://fhir.demohospital.no/graphql/
+    technology GRAPH_QL
+}
+
+endpoint LAB {
+    type SERVER
+    at https://labsrv.demohospital.no:8080/
+    technology GRAPH_QL
+}
+
+
+correspondence DataInteg (GP,HOSPITAL,LAB) {
+    
+    /* identifying identical entities */
+    identify (GP.Encounter,HOSPITAL.Encounter) as Encounter with fields;
+    identify (GP.Period,HOSPITAL.Period) as Period with fields;
+    identify (GP.Identifier,HOSPITAL.Identifier) as Identifier with fields;
+    identify (GP.HumanName,HOSPITAL.HumanName) as HumanName with fields;
+    identify (GP.Coding,HOSPITAL.Coding) as Coding with fields;
+    identify (GP.DiagnosticReport,HOSPITAL.DiagnosticReport) as DiagnosticReport with fields;
+
+    /* identity patient entities and identify records based on national ids */
+    identify (GP.Patient,HOSPITAL.Patient) as Patient with fields 
+        when [GP.Patient.identifier.system == "https://www.skatteetaten.no" 
+                HOSPITAL.Patient.identifier.system == "https://www.skatteetaten.no" &&
+                GP.Patient.identifier.value == HOSPITAL.Patient.identifier.value]
+        check integrity;
+
+    /* Identifying the Query fields to create a new federated interface */
+    identify (GP.FHIRResourceService,HOSPITAL.FHIRResourceService, LAB.BloodTestService) as FHIRResourceService with {
+        identify (GP.FHIRResourceService.diagnosticReports,HOSPITAL.FHIRResourceService.diagnosticReports,LAB.BloodTestService.all) as diagnosticReports;
+    };
+    
+    /* Integrating the Laboratory schema */
+    identify (HOSPITAL.Observation,LAB.Result) as Observation with { 
+            identify (HOSPITAL.Observation.effectiveDateTime,LAB.Result.analyzed) as effectiveDateTime;
+            identify (HOSPITAL.Observation.valueQuantity,LAB.Result.quantity) as valueQuantity;
+        } check INTEGRITY;
+    identify (GP.Quantity,HOSPITAL.Quantity,LAB.Quantity) as Quantity with fields;
+    identify (HOSPITAL.DiagnosticReport,LAB.BloodProbe) as DiagnosticReport with {
+        /* the specific blood test values are treated as (*@Observation@*) results with respecitce LOINC codes */
+        identify (HOSPITAL.DiagnosticReport.result,LAB.BloodProbe.CRP) as result 
+            when [HOSPITAL.DiagnosticReport.result.coding.system = "https://loinc.org/" &&
+                    HOSPITAL.DiagnosticReport.result.coding.code = "1988-5"];
+        identify (HOSPITAL.DiagnosticReport.result,LAB.BloodProbe.Erythrocytes) as result 
+            when [HOSPITAL.DiagnosticReport.result.coding.system = "https://loinc.org/" &&
+                    HOSPITAL.DiagnosticReport.result.coding.code = "5161-5"];
+        identify (HOSPITAL.DiagnosticReport.result,LAB.BloodProbe.Leucocytes) as result 
+            when [HOSPITAL.DiagnosticReport.result.coding.system = "https://loinc.org/" &&
+                    HOSPITAL.DiagnosticReport.result.coding.code = "26464-8"];
+        identify (HOSPITAL.DiagnosticReport.result,LAB.BloodProbe.Thrombocytes) as result 
+            when [HOSPITAL.DiagnosticReport.result.coding.system = "https://loinc.org/" &&
+                    HOSPITAL.DiagnosticReport.result.coding.code = "24375-8"];
+        identify (HOSPITAL.DiagnosticReport.result,LAB.BloodProbe.Thrombocytes) as result 
+            when [HOSPITAL.DiagnosticReport.result.coding.system = "https://loinc.org/" &&
+                    HOSPITAL.DiagnosticReport.result.coding.code = "24375-8"];
+        identify (HOSPITAL.DiagnosticReport.result,LAB.BloodProbe.Glucose) as result 
+            when [HOSPITAL.DiagnosticReport.result.coding.system = "https://loinc.org/" &&
+                    HOSPITAL.DiagnosticReport.result.coding.code = "2339-0"];
+        identify (HOSPITAL.DiagnosticReport.result,LAB.BloodProbe.HDLCholesterol) as result 
+            when [HOSPITAL.DiagnosticReport.result.coding.system = "https://loinc.org/" &&
+                    HOSPITAL.DiagnosticReport.result.coding.code = "2055-9"];
+        identify (HOSPITAL.DiagnosticReport.result,LAB.BloodProbe.LDLCholesterol) as result 
+            when [HOSPITAL.DiagnosticReport.result.coding.system = "https://loinc.org/" &&
+                    HOSPITAL.DiagnosticReport.result.coding.code = "2089-1"];
+        identify (HOSPITAL.DiagnosticReport.result,LAB.BloodProbe.Triglycerides) as result 
+            when [HOSPITAL.DiagnosticReport.result.coding.system = "https://loinc.org/" &&
+                    HOSPITAL.DiagnosticReport.result.coding.code = "3043-7"];
+    /* identificatiion rule treating (*@BloodProbe@*) as a FHIR (*@Diagnostic Report@*) with respective SNOMED-CT term
+       and matching records if they refer to the same patient */
+    } when [HOSPITAL.DiagnosticReport.coding.system == "http://snomed.info/sct" &&
+            HOSPITAL.DiagnosticReport.coding.system == "396550006" &&
+            HOSPITAL.DiagnosticReport.subject.identifier.system = "https://www.skatteetaten.no"
+            HOSPITAL.DiagnosticReport.subject.identifier.value == LAB.BloodProbe.patientId];
+}
+
+
+goal GraphQLEndpoint {
+    correspondence DataInteg
+    action FEDERATION
+    target SERVER {
+        port 8080
+        path /graphql
+    }
+}
+
+

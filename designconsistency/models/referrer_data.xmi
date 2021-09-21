@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="https://www.hvl.no/past/simpleCD">
+  <classes name="Patient">
+    <attributes name="fullName" type="//@dataTypes.0"/>
+    <attributes name="birthdate" type="//@dataTypes.2"/>
+    <attributes name="gender" type="//@dataTypes.4"/>
+  </classes>
+  <classes name="Record"/>
+  <classes name="RecordItem" isAbstract="true">
+    <attributes name="recorded" type="//@dataTypes.3"/>
+    <attributes name="comment" type="//@dataTypes.0"/>
+  </classes>
+  <classes name="Physician">
+    <attributes name="practicionerID" type="//@dataTypes.0"/>
+    <attributes name="speciality" type="//@dataTypes.0"/>
+  </classes>
+  <classes name="Measurement" superClass="//@classes.2">
+    <attributes name="value" type="//@dataTypes.1"/>
+    <attributes name="unit" type="//@dataTypes.0"/>
+    <attributes name="type" type="//@dataTypes.0"/>
+  </classes>
+  <classes name="Diagnosis" superClass="//@classes.2">
+    <attributes name="disease" type="//@dataTypes.0"/>
+    <attributes name="isUrgent" type="//@dataTypes.5"/>
+  </classes>
+  <classes name="Treatment" superClass="//@classes.2"/>
+  <associations name="patient" owner="//@classes.0" target="//@classes.1" srcLowerBound="1" srcUpperBound="1" trgLowerBound="0" trgUpperBound="-1"/>
+  <associations name="physician" owner="//@classes.1" target="//@classes.3" srcLowerBound="0" srcUpperBound="-1" trgLowerBound="1" trgUpperBound="1"/>
+  <associations name="entries" isContainment="true" owner="//@classes.1" target="//@classes.2" srcLowerBound="1" srcUpperBound="1" trgLowerBound="0" trgUpperBound="-1"/>
+  <associations name="basedOn" owner="//@classes.6" target="//@classes.5" srcLowerBound="0" srcUpperBound="-1" trgLowerBound="1" trgUpperBound="-1"/>
+  <dataTypes name="String"/>
+  <dataTypes name="Integer"/>
+  <dataTypes name="Date"/>
+  <dataTypes name="Timestamp"/>
+  <dataTypes name="Gender"/>
+  <dataTypes name="Boolean "/>
+</Package>

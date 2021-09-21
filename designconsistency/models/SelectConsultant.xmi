@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DecisionTable xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="SimpleDecisionTables" name="Select Consultant">
+  <inputSideColumns name="diagnosis" type="String"/>
+  <inputSideColumns name="urgency" type="Boolean"/>
+  <outputSideColumns name="practicioner" type="String"/>
+  <outputSideColumns name="specialization" type="String"/>
+  <rows>
+    <cells valueExpression="Essential Hypertension" column="//@inputSideColumns.0"/>
+    <cells valueExpression="123 456 789" column="//@outputSideColumns.0"/>
+    <cells valueExpression="Cardiology" column="//@outputSideColumns.1"/>
+  </rows>
+  <rows>
+    <cells valueExpression="Bacterial Meningitis" column="//@inputSideColumns.0"/>
+    <cells valueExpression="911 113 112" column="//@outputSideColumns.0"/>
+    <cells valueExpression="Neurology" column="//@outputSideColumns.1"/>
+  </rows>
+  <rows>
+    <cells valueExpression="Migraine unspecified" column="//@inputSideColumns.0"/>
+    <cells valueExpression="false" column="//@inputSideColumns.1"/>
+    <cells valueExpression="042 023 007" column="//@outputSideColumns.0"/>
+    <cells valueExpression="Internal Medicine" column="//@outputSideColumns.1"/>
+  </rows>
+  <rows>
+    <cells valueExpression="Migraine unspecified" column="//@inputSideColumns.0"/>
+    <cells valueExpression="true" column="//@inputSideColumns.1"/>
+    <cells valueExpression="111 069 464" column="//@outputSideColumns.0"/>
+    <cells valueExpression="Neurology" column="//@outputSideColumns.1"/>
+  </rows>
+  <rows>
+    <cells valueExpression="Atopic Dematitits" column="//@inputSideColumns.0"/>
+    <cells valueExpression="987 654 321" column="//@outputSideColumns.0"/>
+    <cells valueExpression="Dermatology" column="//@outputSideColumns.1"/>
+  </rows>
+</DecisionTable>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://www.hvl.no/past/simpleBPMN">
+  <pools title="Referrer">
+    <nodes xsi:type="StartEvent" name="Patient appeal" outgoing="//@flows.0"/>
+    <nodes xsi:type="ManualActivity" name="Patient Consultation" outgoing="//@flows.1" incoming="//@flows.0" produces="//@dataObjects.0 //@dataObjects.1"/>
+    <nodes xsi:type="XorGateway" outgoing="//@flows.2" incoming="//@flows.1 //@flows.10"/>
+    <nodes xsi:type="AndGateway" outgoing="//@flows.3 //@flows.4" incoming="//@flows.2"/>
+    <nodes xsi:type="ServiceActivity" name="Extract Patient Information" outgoing="//@flows.6" incoming="//@flows.3"/>
+    <nodes xsi:type="BusinessRuleActivity" name="Select Consultant" outgoing="//@flows.5" incoming="//@flows.4" produces="//@dataObjects.3 //@dataObjects.4" consumes="//@dataObjects.0 //@dataObjects.1"/>
+    <nodes xsi:type="AndGateway" outgoing="//@flows.7" incoming="//@flows.5 //@flows.6"/>
+    <nodes xsi:type="MessageSendActivity" name="Send Referral" outgoing="//@flows.8" incoming="//@flows.7" consumes="//@dataObjects.3 //@dataObjects.4"/>
+    <nodes xsi:type="EventBasedGateway" outgoing="//@flows.9 //@flows.11" incoming="//@flows.8"/>
+    <nodes xsi:type="MessageEvent" name="Reject" outgoing="//@flows.10" incoming="//@flows.9"/>
+    <nodes xsi:type="MessageEvent" name="Approval" outgoing="//@flows.12" incoming="//@flows.11"/>
+    <nodes xsi:type="EndEvent" name="Referral Finished" incoming="//@flows.12"/>
+  </pools>
+  <pools title="Consultant"/>
+  <flows src="//@pools.0/@nodes.0" trg="//@pools.0/@nodes.1"/>
+  <flows src="//@pools.0/@nodes.1" trg="//@pools.0/@nodes.2"/>
+  <flows src="//@pools.0/@nodes.2" trg="//@pools.0/@nodes.3"/>
+  <flows src="//@pools.0/@nodes.3" trg="//@pools.0/@nodes.4"/>
+  <flows src="//@pools.0/@nodes.3" trg="//@pools.0/@nodes.5"/>
+  <flows src="//@pools.0/@nodes.5" trg="//@pools.0/@nodes.6"/>
+  <flows src="//@pools.0/@nodes.4" trg="//@pools.0/@nodes.6"/>
+  <flows src="//@pools.0/@nodes.6" trg="//@pools.0/@nodes.7"/>
+  <flows src="//@pools.0/@nodes.7" trg="//@pools.0/@nodes.8"/>
+  <flows src="//@pools.0/@nodes.8" trg="//@pools.0/@nodes.9"/>
+  <flows src="//@pools.0/@nodes.9" trg="//@pools.0/@nodes.2"/>
+  <flows src="//@pools.0/@nodes.8" trg="//@pools.0/@nodes.10"/>
+  <flows src="//@pools.0/@nodes.10" trg="//@pools.0/@nodes.11"/>
+  <dataObjects name="Diagnosis" producers="//@pools.0/@nodes.1" consumers="//@pools.0/@nodes.5"/>
+  <dataObjects name="Urgency" producers="//@pools.0/@nodes.1" consumers="//@pools.0/@nodes.5"/>
+  <dataObjects name="PatientData"/>
+  <dataObjects name="Practicioner" producers="//@pools.0/@nodes.5" consumers="//@pools.0/@nodes.7"/>
+  <dataObjects name="Specialization" producers="//@pools.0/@nodes.5" consumers="//@pools.0/@nodes.7"/>
+  <messages name="Referral" sender="//@pools.0/@nodes.7" recepient="//@pools.1"/>
+  <messages name="Rejection" sender="//@pools.1" recepient="//@pools.0/@nodes.9"/>
+  <messages name="Approval" sender="//@pools.1" recepient="//@pools.0/@nodes.10"/>
+</Diagram>
