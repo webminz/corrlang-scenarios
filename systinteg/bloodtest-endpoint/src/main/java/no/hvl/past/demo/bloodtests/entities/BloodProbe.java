@@ -24,6 +24,31 @@ public class BloodProbe {
     @JoinTable(name = "Erythrocytes", joinColumns = @JoinColumn(name = "RESULT_ID"), inverseJoinColumns = @JoinColumn(name = "PROBE_ID"))
     private Result Erythrocytes;
 
+    @OneToOne
+    @JoinTable(name = "Leucocytes", joinColumns = @JoinColumn(name = "RESULT_ID"), inverseJoinColumns = @JoinColumn(name = "PROBE_ID"))
+    private Result Leucocytes;
+
+    @OneToOne
+    @JoinTable(name = "Thrombocytes", joinColumns = @JoinColumn(name = "RESULT_ID"), inverseJoinColumns = @JoinColumn(name = "PROBE_ID"))
+    private Result Thrombocytes;
+
+    @OneToOne
+    @JoinTable(name = "Glucose", joinColumns = @JoinColumn(name = "RESULT_ID"), inverseJoinColumns = @JoinColumn(name = "PROBE_ID"))
+    private Result Glucose;
+
+    @OneToOne
+    @JoinTable(name = "HDLCholesterol", joinColumns = @JoinColumn(name = "RESULT_ID"), inverseJoinColumns = @JoinColumn(name = "PROBE_ID"))
+    private Result HDLCholesterol;
+
+    @OneToOne
+    @JoinTable(name = "LDLCholesterol", joinColumns = @JoinColumn(name = "RESULT_ID"), inverseJoinColumns = @JoinColumn(name = "PROBE_ID"))
+    private Result LDLCholesterol;
+
+    @OneToOne
+    @JoinTable(name = "Triglycerides", joinColumns = @JoinColumn(name = "RESULT_ID"), inverseJoinColumns = @JoinColumn(name = "PROBE_ID"))
+    private Result Triglycerides;
+
+
     public BloodProbe() {
     }
 
@@ -75,5 +100,53 @@ public class BloodProbe {
 
     public void setErythrocytes(Result erythrocytes) {
         Erythrocytes = erythrocytes;
+    }
+
+    public Result getLeucocytes() {
+        return Leucocytes;
+    }
+
+    public void setLeucocytes(Result leucocytes) {
+        Leucocytes = leucocytes;
+    }
+
+    public Result getThrombocytes() {
+        return Thrombocytes;
+    }
+
+    public void setThrombocytes(Result thrombocytes) {
+        Thrombocytes = thrombocytes;
+    }
+
+    public Result getGlucose() {
+        return Glucose;
+    }
+
+    public void setGlucose(Result glucose) {
+        Glucose = glucose;
+    }
+
+    public Result getHDLCholesterol() {
+        return HDLCholesterol;
+    }
+
+    public void setHDLCholesterol(Result HDLCholesterol) {
+        this.HDLCholesterol = HDLCholesterol;
+    }
+
+    public Result getLDLCholesterol() {
+        return LDLCholesterol;
+    }
+
+    public void setLDLCholesterol(Result LDLCholesterol) {
+        this.LDLCholesterol = LDLCholesterol;
+    }
+
+    public Result getTriglycerides() {
+        return Triglycerides;
+    }
+
+    public void setTriglycerides(Result triglycerides) {
+        Triglycerides = triglycerides;
     }
 }

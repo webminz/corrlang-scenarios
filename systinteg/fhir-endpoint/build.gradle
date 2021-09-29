@@ -25,3 +25,21 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+task runHospitalApp(type: org.springframework.boot.gradle.tasks.run.BootRun, dependsOn: 'build') {
+	group = 'Application'
+	mainClass.set("no.hvl.past.demo.fhir.SimpleFHIRApplication")
+	doFirst() {
+		classpath = sourceSets.main.runtimeClasspath
+		systemProperty 'spring.profiles.active', 'hosp'
+	}
+}
+
+task runGPApp(type: org.springframework.boot.gradle.tasks.run.BootRun, dependsOn: 'build') {
+	group = 'Application'
+	mainClass.set("no.hvl.past.demo.fhir.SimpleFHIRApplication")
+	doFirst() {
+		classpath = sourceSets.main.runtimeClasspath
+		systemProperty 'spring.profiles.active', 'gp'
+	}
+}

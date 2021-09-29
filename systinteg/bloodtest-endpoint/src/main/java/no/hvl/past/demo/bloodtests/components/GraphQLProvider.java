@@ -6,7 +6,6 @@ import graphql.GraphQL;
 import graphql.language.StringValue;
 import graphql.schema.*;
 import graphql.schema.idl.*;
-import no.hvl.past.demo.bloodtests.service.MutationService;
 import no.hvl.past.demo.bloodtests.service.QueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,8 +21,6 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class GraphQLProvider {
 
-    @Autowired
-    private MutationService mutationService;
 
     @Autowired
     private QueryService queryService;
@@ -57,18 +54,6 @@ public class GraphQLProvider {
         }
     });
 
-//    private static final TypeResolver COMM_CHANNEL_TYPE_RESOLVER = new TypeResolver() {
-//
-//        @Override
-//        public GraphQLObjectType getType(TypeResolutionEnvironment env) {
-//            Object object = env.getObject();
-//            if (object instanceof Address) {
-//                return env.getSchema().getObjectType("Address");
-//            } else  {
-//                return env.getSchema().getObjectType("Electronic");
-//            }
-//        }
-//    };
 
     private GraphQL graphQL;
 
@@ -97,11 +82,10 @@ public class GraphQLProvider {
         return RuntimeWiring.newRuntimeWiring()
 
                 .type(TypeRuntimeWiring.newTypeWiring("Query")
-              //          .dataFetcher("diagnosticReports", dataFetchingEnvironment -> queryService.diagnosticReports())
+                        .dataFetcher("all", dataFetchingEnvironment -> queryService.all())
+                        .dataFetcher("forPatient", dataFetchingEnvironment -> queryService.forPatient(dataFetchingEnvironment.getArgument("patient")))
+                        .dataFetcher("forPhysician", dataFetchingEnvironment -> queryService.forPhysician(dataFetchingEnvironment.getArgument("physician")))
                 )
-//                .type(TypeRuntimeWiring.newTypeWiring("CommunicationChannel")
-//                        .typeResolver(COMM_CHANNEL_TYPE_RESOLVER)
-//                        .build())
                 .scalar(DATE_TIME)
                 .build();
     }

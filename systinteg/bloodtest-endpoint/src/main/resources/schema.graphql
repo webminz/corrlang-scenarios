@@ -1,46 +1,33 @@
 scalar DateTime
 
 type Query {
-	diagnosticReports: [DiagnosticReport]
+	all: [BloodProbe]
+	forPatient(patient: ID): [BloodProbe]
+	forPhysician(physician: ID): [BloodProbe]
 }
 
-type DiagnosticReport {
-	subject: Patient
-	result: [Observation]
+type BloodProbe {
+	patientId: ID!
+	physicianId: ID
+	issued: DateTime
+	CRP: Result
+	Erythrocytes: Result
+	Leucocytes: Result
+	Thrombocytes: Result
+ 	Glucose: Result
+	HDLCholesterol: Result
+	LDLCholesterol: Result
+	Triglycerides: Result
 }
 
-type Identifier {
-    value: String!
-}
-
-type HumanName {
-    text: String!
-}
-
-type Address {
-    text: String!
-}
-
-type Patient {
-	id: Identifier!
-	name: HumanName!
-	contact: [Address]
-	CORRLANG_isStructurallyConsistent: Boolean
-}
-
-type Observation {
-    coding: CodeableConcept
-    valueQuantity: Quantity
+type Result {
+    analyzed: DateTime
+    quantity: Quantity
+    comment: String
 }
 
 type Quantity {
-    value: Float
+    value: Float!
     unit: String
 }
-
-type CodeableConcept {
-    code: String!
-    system: String
-}
-
 
