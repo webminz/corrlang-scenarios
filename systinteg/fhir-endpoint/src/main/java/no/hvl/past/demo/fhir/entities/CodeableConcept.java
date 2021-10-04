@@ -1,14 +1,21 @@
 package no.hvl.past.demo.fhir.entities;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class CodeableConcept {
 
-    private final String code;
+    private String code;
 
-    private final String system;
+    private String system;
 
     private String version;
 
     private String display;
+
+    public CodeableConcept() {
+
+    }
 
     public CodeableConcept(String code, String system) {
         this.code = code;

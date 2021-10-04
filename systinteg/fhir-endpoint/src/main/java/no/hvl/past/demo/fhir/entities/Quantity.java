@@ -1,15 +1,23 @@
 package no.hvl.past.demo.fhir.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Quantity {
 
+    private double value;
 
-    private final double value;
+    private String unit;
 
-    private final String unit;
-
+    @Column(name = "QUANTITY_CODE_SYSTEM")
     private String system;
 
+    @Column(name = "QUANTITY_CODE")
     private String code;
+
+    public Quantity() {
+    }
 
     public Quantity(double value, String unit) {
         this.value = value;

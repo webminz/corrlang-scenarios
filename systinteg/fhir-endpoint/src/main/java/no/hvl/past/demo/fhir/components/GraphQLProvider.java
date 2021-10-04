@@ -59,18 +59,37 @@ public class GraphQLProvider {
         }
     });
 
-//    private static final TypeResolver COMM_CHANNEL_TYPE_RESOLVER = new TypeResolver() {
-//
-//        @Override
-//        public GraphQLObjectType getType(TypeResolutionEnvironment env) {
-//            Object object = env.getObject();
-//            if (object instanceof Address) {
-//                return env.getSchema().getObjectType("Address");
-//            } else  {
-//                return env.getSchema().getObjectType("Electronic");
-//            }
-//        }
-//    };
+
+    public static final GraphQLScalarType DATE = new GraphQLScalarType("Date", "Represents a date", new Coercing() {
+        @Override
+        public Object serialize(Object o) throws CoercingSerializeException {
+            if (o instanceof LocalDate) {
+                LocalDate dt = (LocalDate) o;
+                return dt.format(DateTimeFormatter.ISO_LOCAL_DATE);
+            }
+            throw new CoercingSerializeException("Unable to serialize object: " + o.toString());
+        }
+
+        @Override
+        public Object parseValue(Object o) throws CoercingParseValueException {
+            if (o instanceof String) {
+                String s = o.toString();
+                return LocalDateTime.parse(s, DateTimeFormatter.ISO_LOCAL_DATE);
+            }
+            throw new CoercingParseValueException("Unable to parse given input: " + o.toString());
+        }
+
+        @Override
+        public Object parseLiteral(Object o) throws CoercingParseLiteralException {
+            if (o instanceof StringValue) {
+                String value = ((StringValue) o).getValue();
+                return LocalDate.parse(value, DateTimeFormatter.ISO_LOCAL_DATE);
+            }
+            throw new CoercingParseLiteralException("Unable to parse given input: " + o.toString());
+        }
+    });
+
+
 
     private GraphQL graphQL;
 
@@ -99,12 +118,63 @@ public class GraphQLProvider {
         return RuntimeWiring.newRuntimeWiring()
 
                 .type(TypeRuntimeWiring.newTypeWiring("Query")
+                        .dataFetcher("patients", dataFetchingEnvironment -> queryService.patients())
+                        .dataFetcher("patient", dataFetchingEnvironment -> queryService.patient(dataFetchingEnvironment.getArgument("id")))
+                        .dataFetcher("observations", dataFetchingEnvironment -> queryService.observations())
+                        .dataFetcher("observation", dataFetchingEnvironment -> queryService.observation(dataFetchingEnvironment.getArgument("id")))
                         .dataFetcher("diagnosticReports", dataFetchingEnvironment -> queryService.diagnosticReports())
+                        .dataFetcher("diagnosticReport", dataFetchingEnvironment -> queryService.diagnosticReport(dataFetchingEnvironment.getArgument("id")))
+                        .dataFetcher("encounters", dataFetchingEnvironment -> queryService.encounters())
+                        .dataFetcher("encounter", dataFetchingEnvironment -> queryService.encounter(dataFetchingEnvironment.getArgument("id")))
                 )
-//                .type(TypeRuntimeWiring.newTypeWiring("CommunicationChannel")
-//                        .typeResolver(COMM_CHANNEL_TYPE_RESOLVER)
-//                        .build())
+                .type(TypeRuntimeWiring.newTypeWiring("Mutation")
+                        .dataFetcher("insertPatient", dataFetchingEnvironment -> mutationService.insertPatient(
+                                dataFetchingEnvironment.getArgument("identifier"),
+                                dataFetchingEnvironment.getArgument("identifierSystem"),
+                                Patient.AdministrativeGender.valueOf(dataFetchingEnvironment.getArgument("gender")),
+                                dataFetchingEnvironment.getArgument("familyName"),
+                                dataFetchingEnvironment.getArgument("birthdate"),
+                                dataFetchingEnvironment.getArgument("givenNames")
+                        ))
+                        .dataFetcher("addAddressForPatient", dataFetchingEnvironment -> mutationService.addAddressForPatient(
+                                Long.parseLong(dataFetchingEnvironment.getArgument("patientId")),
+                                Address.AddressUse.valueOf(dataFetchingEnvironment.getArgument("use")),
+                                dataFetchingEnvironment.getArgument("country"),
+                                dataFetchingEnvironment.getArgument("city"),
+                                dataFetchingEnvironment.getArgument("postalCode"),
+                                dataFetchingEnvironment.getArgument("street"),
+                                dataFetchingEnvironment.getArgument("streetNo")
+                        ))
+                        .dataFetcher("addObservation", dataFetchingEnvironment -> mutationService.addObservation(
+                                Long.parseLong(dataFetchingEnvironment.getArgument("subjectId")),
+                                dataFetchingEnvironment.getArgument("diagnosticReportId") == null ? null : Long.parseLong(dataFetchingEnvironment.getArgument("diagnosticReportId")),
+                                dataFetchingEnvironment.getArgument("encounterId") == null ? null : Long.parseLong(dataFetchingEnvironment.getArgument("encounterId")),
+                                dataFetchingEnvironment.getArgument("effectiveDateTime"),
+                                dataFetchingEnvironment.getArgument("quantityValue"),
+                                dataFetchingEnvironment.getArgument("quantityUnit"),
+                                dataFetchingEnvironment.getArgument("code"),
+                                dataFetchingEnvironment.getArgument("codeSystem")
+                        ))
+                        .dataFetcher("addDiagnosticReport", dataFetchingEnvironment -> mutationService.addDiagnosticReport(
+                                Long.parseLong(dataFetchingEnvironment.getArgument("subjectId")),
+                                dataFetchingEnvironment.getArgument("encounterId") == null ? null : Long.parseLong(dataFetchingEnvironment.getArgument("encounterId")),
+                                DiagnosticReport.DiagnosticReportStatus.valueOf(dataFetchingEnvironment.getArgument("status")),
+                                dataFetchingEnvironment.getArgument("issued"),
+                                dataFetchingEnvironment.getArgument("code"),
+                                dataFetchingEnvironment.getArgument("codeSystem")
+                        ))
+                        .dataFetcher("addEncounter", dataFetchingEnvironment -> mutationService.addEncounter(
+                                Long.parseLong(dataFetchingEnvironment.getArgument("subjectId")),
+                                Encounter.EncounterStatus.valueOf(dataFetchingEnvironment.getArgument("status")),
+                                dataFetchingEnvironment.getArgument("start")
+                        ))
+                        .dataFetcher("deletePatient", dataFetchingEnvironment -> mutationService.deletePatient(dataFetchingEnvironment.getArgument("id")))
+                        .dataFetcher("deleteObservation", dataFetchingEnvironment -> mutationService.deleteObservation(dataFetchingEnvironment.getArgument("id")))
+                        .dataFetcher("deleteEncounter", dataFetchingEnvironment -> mutationService.deleteEncounter(dataFetchingEnvironment.getArgument("encounter")))
+                        .dataFetcher("deleteReport", dataFetchingEnvironment -> mutationService.deleteReport(dataFetchingEnvironment.getArgument("id")))
+                )
                 .scalar(DATE_TIME)
+                .scalar(DATE)
                 .build();
     }
 

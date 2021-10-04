@@ -1,46 +1,193 @@
 scalar DateTime
+scalar Date
+
+enum IdentifierUse {
+	USUAL
+	OFFICIAL
+	TEMP
+	SECONDARY
+	OLD
+}
+
+enum NameUse {
+	USUAL
+	OFFICIAL
+	TEMP
+	NICKNAME
+	ANYNOMOUS
+	OLD
+	MAIDEN
+}
+
+enum AdministrativeGender {
+	MALE
+	FEMALE
+	OTHER
+	UNKNOWN
+}
+
+enum AddressUse {
+	HOME
+	WORK
+	TEMP
+	OLD
+	BILLING
+}
+
+enum AddressType {
+	POSTAL
+	PHYSICAL
+	BOTH
+}
+
+enum DiagnosticReportStatus {
+	REGISTERED
+	PARTIAL
+	PRELIMINARY
+	FINAL
+}
+
+enum EncounterStatus {
+	PLANNED
+	ARRIVED
+	TRIAGED
+	IN_PROGRESS
+	ONLEAVE
+	FINISHED
+	CANCELLED
+}
 
 type Query {
+	patients: [Patient]
+	patient(id: ID): Patient
+	observations: [Observation]
+	observation(id: ID): Observation
+	diagnosticReport(id: ID): DiagnosticReport
 	diagnosticReports: [DiagnosticReport]
+	encounters: [Encounter]
+	encounter(id: ID): Encounter
+}
+
+
+type Mutation {
+	insertPatient(
+		identifier: ID! 
+		identifierSystem: String
+		gender: AdministrativeGender
+		familyName: String!
+		birthdate: Date!
+		givenNames: [String]): Patient
+	addAddressForPatient(
+		patientId: ID!
+		use: AddressUse
+		country: String
+		city: String
+		postalCode: String
+		street: String
+		streetNo: String
+		): Patient
+	addObservation(
+		subjectId: ID!
+		diagnosticReportId: ID
+		encounterId: ID
+		effectiveDateTime: DateTime
+		quantityValue: Float
+		quantityUnit: String
+		code: String
+		codeSystem: String
+	): Observation
+	addDiagnosticReport(
+		subjectId: ID!
+		encounterId: ID
+		status: DiagnosticReportStatus
+		issued: DateTime
+		code: String
+		codeSystem: String
+	): DiagnosticReport
+	addEncounter(
+		subjectId: ID!
+		status: EncounterStatus
+		start: DateTime
+	): Encounter
+	deletePatient(id: ID!): Patient
+	deleteObservation(id: ID!): Observation
+	deleteEncounter(id: ID!): Encounter
+	deleteReport(id: ID!): DiagnosticReport
+}
+
+
+type Encounter {
+	id: ID
+	status: EncounterStatus
+	start: DateTime
+	end: DateTime
+	subject: Patient
 }
 
 type DiagnosticReport {
+	id: ID
+	status: DiagnosticReportStatus
 	subject: Patient
+	effectiveDateTime: DateTime
+	issued: DateTime
+	encounter: Encounter
 	result: [Observation]
+	coding: CodeableConcept
 }
 
 type Identifier {
     value: String!
+    system: String
+    use: IdentifierUse
+    type: String
 }
 
 type HumanName {
-    text: String!
+	use: NameUse
+    text: String
+    family: String
+    given: [String]
+    prefix: [String]
+    suffix: [String]
 }
 
 type Address {
     text: String!
+    use: AddressUse
+    city: String
+    postalCode: String
+    country: String
+    line: [String]
 }
 
 type Patient {
-	id: Identifier!
-	name: HumanName!
+	id: ID
+	identifier: Identifier
+	name: HumanName
+	birthdate: Date
 	contact: [Address]
-	CORRLANG_isStructurallyConsistent: Boolean
 }
 
 type Observation {
+	id: ID
     coding: CodeableConcept
+    effectiveDateTime: DateTime
     valueQuantity: Quantity
+    subject: Patient
 }
 
 type Quantity {
     value: Float
     unit: String
+    system: String
+    code: String
 }
 
 type CodeableConcept {
     code: String!
     system: String
+    version: String
+    display: String
 }
 
 

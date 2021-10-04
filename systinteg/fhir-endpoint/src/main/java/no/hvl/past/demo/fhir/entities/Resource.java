@@ -1,14 +1,15 @@
 package no.hvl.past.demo.fhir.entities;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 
-
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Resource {
 
-    private String id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
     private String resourceType;
 
@@ -17,17 +18,11 @@ public abstract class Resource {
     public Resource() {
     }
 
-    public Resource(String id, String resourceType) {
-        this.id = id;
-        this.resourceType = resourceType;
-    }
-
-
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

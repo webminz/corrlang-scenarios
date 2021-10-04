@@ -1,7 +1,11 @@
 package no.hvl.past.demo.fhir.entities;
 
+import no.hvl.past.demo.fhir.components.StringListConverter;
+
+import javax.persistence.*;
 import java.util.List;
 
+@Embeddable
 public class HumanName {
 
     public enum NameUse {
@@ -14,16 +18,24 @@ public class HumanName {
         MAIDEN
     }
 
+    HumanName() {
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "NAME_USE")
     private NameUse use;
 
     private String text;
 
     private String family;
 
+    @Convert(converter = StringListConverter.class)
     private List<String> given;
 
+    @Convert(converter = StringListConverter.class)
     private List<String> prefix;
 
+    @Convert(converter = StringListConverter.class)
     private List<String> suffix;
 
     public HumanName(NameUse use, String text, String family, List<String> given, List<String> prefix, List<String> suffix) {

@@ -1,12 +1,25 @@
 package no.hvl.past.demo.fhir.entities;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+@Embeddable
 public class Identifier {
 
+    private String value;
 
-    private final String value;
+    private String system;
 
-    private final String system;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "IDENTIFIER_USE")
+    private IdentifierUse use;
 
+    private String type;
+
+    public Identifier() {
+    }
 
     public Identifier(String value, String system) {
         this.value = value;
@@ -37,10 +50,6 @@ public class Identifier {
     public void setType(String type) {
         this.type = type;
     }
-
-    private IdentifierUse use;
-
-    private String type;
 
     public enum IdentifierUse {
         USUAL,

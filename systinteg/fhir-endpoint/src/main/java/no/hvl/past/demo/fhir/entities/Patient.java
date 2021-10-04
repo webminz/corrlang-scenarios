@@ -1,8 +1,11 @@
 package no.hvl.past.demo.fhir.entities;
 
+import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
+@Entity
 public class Patient extends Resource {
 
     public enum AdministrativeGender {
@@ -12,17 +15,20 @@ public class Patient extends Resource {
         UNKNWON
     }
 
+    @Embedded
     private Identifier identifier;
 
+    @Enumerated(EnumType.STRING)
     private AdministrativeGender gender;
 
+    @Embedded
     private HumanName name;
 
     private LocalDate birthdate;
 
-    private boolean CORRLANG_isStructurallyConsistent;
-
-    private Collection<Address> contact;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "PATIENT_ADDRESS", joinColumns = @JoinColumn(name = "PATIENT_ID"), inverseJoinColumns = @JoinColumn(name = "ADDRESS_ID"))
+    private Set<Address> contact;
 
     public Identifier getIdentifier() {
         return identifier;
@@ -56,19 +62,11 @@ public class Patient extends Resource {
         this.birthdate = birthdate;
     }
 
-    public boolean isCORRLANG_isStructurallyConsistent() {
-        return CORRLANG_isStructurallyConsistent;
-    }
-
-    public void setCORRLANG_isStructurallyConsistent(boolean CORRLANG_isStructurallyConsistent) {
-        this.CORRLANG_isStructurallyConsistent = CORRLANG_isStructurallyConsistent;
-    }
-
-    public Collection<Address> getContact() {
+    public Set<Address> getContact() {
         return contact;
     }
 
-    public void setContact(Collection<Address> contact) {
+    public void setContact(Set<Address> contact) {
         this.contact = contact;
     }
 }

@@ -1,7 +1,11 @@
 package no.hvl.past.demo.fhir.entities;
 
+import no.hvl.past.demo.fhir.components.StringListConverter;
+
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Address {
 
     public enum AddressUse {
@@ -18,12 +22,19 @@ public class Address {
         BOTH
     }
 
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @Enumerated(EnumType.STRING)
     private AddressUse use;
 
+    @Enumerated(EnumType.STRING)
     private AddressType type;
 
     private String text;
 
+    @Convert(converter = StringListConverter.class)
     private List<String> line;
 
     private String city;
