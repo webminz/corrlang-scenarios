@@ -53,7 +53,7 @@ public class GraphQLProvider {
         public Object parseLiteral(Object o) throws CoercingParseLiteralException {
             if (o instanceof StringValue) {
                 String value = ((StringValue) o).getValue();
-                return LocalDate.parse(value, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+                return LocalDateTime.parse(value, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
             }
             throw new CoercingParseLiteralException("Unable to parse given input: " + o.toString());
         }

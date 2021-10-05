@@ -6,7 +6,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Quantity {
 
-    private double value;
+    private Double value;
 
     private String unit;
 
@@ -19,12 +19,12 @@ public class Quantity {
     public Quantity() {
     }
 
-    public Quantity(double value, String unit) {
+    public Quantity(Double value, String unit) {
         this.value = value;
         this.unit = unit;
     }
 
-    public Quantity(double value, String unit, String system, String code) {
+    public Quantity(Double value, String unit, String system, String code) {
         this.value = value;
         this.unit = unit;
         this.system = system;

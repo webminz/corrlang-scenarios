@@ -71,7 +71,9 @@ public class MutationService {
         address.setUse(use);
         address.setCity(city);
         address.setPostalCode(postalCode);
-        address.setLine(Arrays.asList(country, postalCode + " " + city, street + " " + streetNo));
+        List<String> line = Arrays.asList(country, postalCode + " " + city, street + " " + streetNo);
+        address.setLine(line);
+        address.setText(String.join("\n", line));
         addressRepo.save(address);
         Optional<Patient> byId = patientRepo.findById(patientId);
         byId.ifPresent(patient -> {
@@ -93,20 +95,26 @@ public class MutationService {
             Long diagnosticReportId,
             Long encounterId,
             LocalDateTime effectiveDateTime,
-            double quantityValue,
+            Double quantityValue,
             String quantityUnit,
             String code,
             String codeSystem) {
         Observation observation = new Observation();
         patientRepo.findById(subjectId).ifPresent(pat -> observation.setSubject(pat));
-        encounterRepo.findById(encounterId).ifPresent(observation::setEncounter);
-        reportRepo.findById(diagnosticReportId).ifPresent(diagnosticReport -> {
-            diagnosticReport.getResult().add(observation);
-            reportRepo.save(diagnosticReport);
-        });
+        if (encounterId != null) {
+            encounterRepo.findById(encounterId).ifPresent(observation::setEncounter);
+        }
+        if (diagnosticReportId != null) {
+            reportRepo.findById(diagnosticReportId).ifPresent(diagnosticReport -> {
+                diagnosticReport.getResult().add(observation);
+                reportRepo.save(diagnosticReport);
+            });
+        }
         observation.setEffectiveDateTime(effectiveDateTime);
-        Quantity quantity = new Quantity(quantityValue, quantityUnit);
-        observation.setValueQuantity(quantity);
+        if (quantityValue != null) {
+            Quantity quantity = new Quantity(quantityValue, quantityUnit);
+            observation.setValueQuantity(quantity);
+        }
         CodeableConcept codeableConcept = new CodeableConcept(code, codeSystem);
         observation.setCoding(codeableConcept);
         observationRepo.save(observation);
@@ -123,7 +131,9 @@ public class MutationService {
             String codeSystem) {
         DiagnosticReport report = new DiagnosticReport();
         patientRepo.findById(subjectId).ifPresent(report::setSubject);
-        encounterRepo.findById(encounterId).ifPresent(report::setEncounter);
+        if (encounterId != null) {
+            encounterRepo.findById(encounterId).ifPresent(report::setEncounter);
+        }
         report.setStatus(status);
         report.setIssued(issued);
         CodeableConcept codeableConcept = new CodeableConcept(code, codeSystem);

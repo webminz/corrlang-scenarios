@@ -1,5 +1,6 @@
 package no.hvl.past.demo.fhir.entities;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -12,6 +13,7 @@ public class Observation extends Resource {
     private LocalDateTime effectiveDateTime;
 
     @Embedded
+    @Nullable
     private Quantity valueQuantity;
 
     @ManyToOne(fetch = FetchType.EAGER)

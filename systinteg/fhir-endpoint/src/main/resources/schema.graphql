@@ -90,11 +90,11 @@ type Mutation {
 		subjectId: ID!
 		diagnosticReportId: ID
 		encounterId: ID
-		effectiveDateTime: DateTime
+		effectiveDateTime: DateTime!
 		quantityValue: Float
 		quantityUnit: String
-		code: String
-		codeSystem: String
+		code: String!
+		codeSystem: String!
 	): Observation
 	addDiagnosticReport(
 		subjectId: ID!
@@ -152,7 +152,7 @@ type HumanName {
 }
 
 type Address {
-    text: String!
+    text: String
     use: AddressUse
     city: String
     postalCode: String
