@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ASCII"?>
+<archimate:Architecture xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:archimate="https://ict.hvl.no/people/patrick-stunkel/metamodels/archimate" xmi:id="_usK3QCayEeymvfennQgseQ">
+  <elements xsi:type="archimate:Actor" xmi:id="_xnjqUCayEeymvfennQgseQ" name="Physician"/>
+  <elements xsi:type="archimate:Role" xmi:id="_zeVlwCayEeymvfennQgseQ" name="Consultant"/>
+  <elements xsi:type="archimate:Role" xmi:id="_0_vHECayEeymvfennQgseQ" name="Referrer"/>
+  <elements xsi:type="archimate:Process" xmi:id="_21xboCayEeymvfennQgseQ" name="Patient Referral"/>
+  <elements xsi:type="archimate:Service" xmi:id="_5qcisCayEeymvfennQgseQ" name="Send E-Referral"/>
+  <elements xsi:type="archimate:Service" xmi:id="_7jThwCayEeymvfennQgseQ" name="Create Journal Export"/>
+  <elements xsi:type="archimate:Service" xmi:id="_9PaeQCayEeymvfennQgseQ" name="Receive E-Referral"/>
+  <elements xsi:type="archimate:DataEntity" xmi:id="__Tpm4CayEeymvfennQgseQ" name="Medical Summary"/>
+  <elements xsi:type="archimate:Component" xmi:id="_BShHUCazEeymvfennQgseQ" name="Referral System"/>
+  <elements xsi:type="archimate:Requirement" xmi:id="_jDThQCazEeymvfennQgseQ" name="1.1.1"/>
+  <associations xmi:id="_CcjRgCazEeymvfennQgseQ" source="_xnjqUCayEeymvfennQgseQ" target="_zeVlwCayEeymvfennQgseQ" label="has"/>
+  <associations xmi:id="_GyZ3cCazEeymvfennQgseQ" source="_xnjqUCayEeymvfennQgseQ" target="_0_vHECayEeymvfennQgseQ" label="has"/>
+  <associations xmi:id="_JdsZACazEeymvfennQgseQ" source="_zeVlwCayEeymvfennQgseQ" target="_21xboCayEeymvfennQgseQ" label="participation"/>
+  <associations xmi:id="_MKunACazEeymvfennQgseQ" source="_0_vHECayEeymvfennQgseQ" target="_21xboCayEeymvfennQgseQ" label="participation"/>
+  <associations xmi:id="_OpfvgCazEeymvfennQgseQ" source="_7jThwCayEeymvfennQgseQ" target="_21xboCayEeymvfennQgseQ" label="facilitates"/>
+  <associations xmi:id="_SQAjMCazEeymvfennQgseQ" source="_9PaeQCayEeymvfennQgseQ" target="_21xboCayEeymvfennQgseQ" label="facilitates"/>
+  <associations xmi:id="_Um5iECazEeymvfennQgseQ" source="_5qcisCayEeymvfennQgseQ" target="_21xboCayEeymvfennQgseQ" label="facilitates"/>
+  <associations xmi:id="_YUfOICazEeymvfennQgseQ" source="_BShHUCazEeymvfennQgseQ" target="_7jThwCayEeymvfennQgseQ" label="realises"/>
+  <associations xmi:id="_aqteoCazEeymvfennQgseQ" source="_BShHUCazEeymvfennQgseQ" target="_9PaeQCayEeymvfennQgseQ" label="realises"/>
+  <associations xmi:id="_chuqoCazEeymvfennQgseQ" source="_BShHUCazEeymvfennQgseQ" target="_5qcisCayEeymvfennQgseQ" label="realises"/>
+  <associations xmi:id="_gzGZMCazEeymvfennQgseQ" source="__Tpm4CayEeymvfennQgseQ" target="_7jThwCayEeymvfennQgseQ"/>
+  <associations xmi:id="_kKl5cCazEeymvfennQgseQ" source="_5qcisCayEeymvfennQgseQ" target="_jDThQCazEeymvfennQgseQ" label="realises"/>
+</archimate:Architecture>

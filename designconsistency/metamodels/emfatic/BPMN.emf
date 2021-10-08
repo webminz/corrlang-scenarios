@@ -1,0 +1,75 @@
+@namespace(
+	uri="https://ict.hvl.no/people/patrick-stunkel/metamodels/bpmn",
+	prefix="bpmn")
+package SimpleBPMN;
+
+
+class BPMNDiagram {
+	val DataObject[*] dataObjects;
+	val Pool[*] pools;
+	val FlowNode[*] nodes;
+	val SequenceFlow[*] flows;
+
+}
+
+class Pool {
+	attr EString[1] name;
+}
+
+abstract class FlowNode {
+	attr EString name;
+	ref SequenceFlow[*]#src outgoing;
+	ref SequenceFlow[*]#trg incoming;
+	ref Pool[?] pool;
+}
+
+enum ActivityType {
+	MANUAL;
+	SERVICE;
+	BUSINESS_RULE;
+	MESSAGE_SEND;
+	MESSAGE_RECV;
+}
+
+class Activity extends FlowNode {
+	attr ActivityType[1] type;
+	ref DataObject[*]#consumers consumes;
+	ref DataObject[*]#producers produces;
+
+}
+
+enum GatewayType {
+	AND;
+	XOR;
+	EVENT_BASED;
+}
+
+class Gateway  extends FlowNode  {
+	attr GatewayType[1] type;
+}
+
+enum EventType {
+	START;
+	END;
+}
+
+class Event extends FlowNode  {
+	attr EventType[1] type;
+}
+
+
+class SequenceFlow {
+	ref FlowNode[1]#outgoing src;
+	ref FlowNode[1]#incoming trg;
+}
+
+class DataObject {
+	attr EString[1] name;
+	ref Activity[*]#consumes consumers;
+	ref Activity[*]#produces producers;
+}
+
+
+
+
+

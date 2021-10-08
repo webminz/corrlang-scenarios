@@ -1,0 +1,45 @@
+@namespace(
+	uri="https://ict.hvl.no/people/patrick-stunkel/metamodels/uml",
+	prefix="uml")
+package UML;
+
+class Model {
+	val Diagram[*] diagrams;
+	val Package[*] packages;
+}
+
+class Diagram {
+	ref UMLElement[*] displays;
+}
+
+abstract class UMLElement {
+	attr EString[1] name;
+}
+
+class Package extends UMLElement {
+	val UMLElement[*] contains;
+}
+
+class DataType extends UMLElement {
+}
+
+class Class extends UMLElement {
+	val Attribute[*] attributes;
+	ref Class[*] superClasses;
+}
+
+class Attribute extends UMLElement {
+	ref DataType[1] type;
+	attr EInt[?] lowerBound;
+	attr EInt[?] upperBound;
+}
+
+class Association extends UMLElement {
+	ref Class[1] owner;
+	ref Class[1] target;
+	attr EBoolean[1] isDirected;
+	attr EInt[?] ownerLowerBound;
+	attr EInt[?] ownerUpperBound;
+	attr EInt[?] targetLowerBound;
+	attr EInt[?] targetUpperBound;
+}

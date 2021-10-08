@@ -1,0 +1,37 @@
+@namespace(
+	uri="https://ict.hvl.no/people/patrick-stunkel/metamodels/dmn",
+	prefix="dmn")
+package DMN;
+
+class DecisionModel {
+	val DecisionTable[+] decisionTables;
+	val ColumnType[*] columnTypes;
+}
+
+class ColumnType {
+	attr EString[1] name;
+}
+
+class DecisionTable {
+	attr String name;
+	val Column[+] inputSideColumns;
+	val Column[+] outputSideColumns;
+	val Row[*] rows;
+}
+
+class Column {
+	attr String name;
+	ref ColumnType[1] type;
+}
+
+class Row {
+	val Cell[2..*] cells;
+}
+
+class Cell {
+	attr String[?] valueExpression;
+	ref Column column;
+}
+
+
+

@@ -1,0 +1,42 @@
+@namespace(
+	uri="https://ict.hvl.no/people/patrick-stunkel/metamodels/archimate",
+	prefix="archimate")
+package ArchiMate;
+
+
+class Architecture {
+	val ArchitectureElement[*] elements;
+	val Association[*] associations;
+}
+
+abstract class ArchitectureElement {
+	attr EString name;
+}
+
+class Actor extends ArchitectureElement {
+}
+
+class Role extends ArchitectureElement {
+}
+
+class Process extends ArchitectureElement {
+}
+
+class Service extends ArchitectureElement {
+}
+
+class Component extends ArchitectureElement {
+}
+
+class DataEntity extends ArchitectureElement {
+}
+
+class Requirement extends ArchitectureElement {
+
+}
+
+class Association {
+	ref ArchitectureElement[1] source;
+	ref ArchitectureElement[1] target;
+	attr EString[?] label;
+}

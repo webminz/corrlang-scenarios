@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ASCII"?>
+<uml:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uml="https://ict.hvl.no/people/patrick-stunkel/metamodels/uml" xmi:id="_NCBUACa2EeymvfennQgseQ">
+  <packages xmi:id="_O0tZoCa2EeymvfennQgseQ" name="UML::builtin">
+    <contains xsi:type="uml:DataType" xmi:id="_TjsRQCa2EeymvfennQgseQ" name="String"/>
+    <contains xsi:type="uml:DataType" xmi:id="_VzLnoCa2EeymvfennQgseQ" name="Real"/>
+    <contains xsi:type="uml:DataType" xmi:id="_XXPbYCa2EeymvfennQgseQ" name="Date"/>
+    <contains xsi:type="uml:DataType" xmi:id="_YcelICa2EeymvfennQgseQ" name="DateTime"/>
+    <contains xsi:type="uml:DataType" xmi:id="_aESQcCa2EeymvfennQgseQ" name="Byte"/>
+  </packages>
+  <packages xmi:id="_dJnCoCa2EeymvfennQgseQ" name="PatientReferral">
+    <contains xsi:type="uml:Class" xmi:id="_haGAYCa2EeymvfennQgseQ" name="Patient">
+      <attributes xmi:id="_is4d8Ca2EeymvfennQgseQ" name="ssn" type="_mWyj4Ca2EeymvfennQgseQ" lowerBound="1" upperBound="1"/>
+      <attributes xmi:id="_o46iYCa2EeymvfennQgseQ" name="fullName" type="_TjsRQCa2EeymvfennQgseQ" upperBound="1"/>
+      <attributes xmi:id="_rRSH8Ca2EeymvfennQgseQ" name="salutation" type="_TjsRQCa2EeymvfennQgseQ" upperBound="1"/>
+      <attributes xmi:id="_t9jg8Ca2EeymvfennQgseQ" name="birthdate" type="_XXPbYCa2EeymvfennQgseQ" lowerBound="1" upperBound="1"/>
+    </contains>
+    <contains xsi:type="uml:DataType" xmi:id="_mWyj4Ca2EeymvfennQgseQ" name="Identifier"/>
+    <contains xsi:type="uml:Class" xmi:id="_xiwGACa2EeymvfennQgseQ" name="Address">
+      <attributes xmi:id="_ytYGECa2EeymvfennQgseQ" name="postalCode" type="_TjsRQCa2EeymvfennQgseQ" upperBound="1"/>
+      <attributes xmi:id="_2BRfwCa2EeymvfennQgseQ" name="city" type="_TjsRQCa2EeymvfennQgseQ" upperBound="1"/>
+      <attributes xmi:id="_4PLhwCa2EeymvfennQgseQ" name="street" type="_TjsRQCa2EeymvfennQgseQ" upperBound="1"/>
+    </contains>
+    <contains xsi:type="uml:Class" xmi:id="_8GMPkCa2EeymvfennQgseQ" name="Record">
+      <attributes xmi:id="_9p3BwCa2EeymvfennQgseQ" name="created" type="_YcelICa2EeymvfennQgseQ" lowerBound="1" upperBound="1"/>
+    </contains>
+    <contains xsi:type="uml:Class" xmi:id="_AVOb0Ca3EeymvfennQgseQ" name="RecordItem">
+      <attributes xmi:id="_B4TYICa3EeymvfennQgseQ" name="comment" type="_TjsRQCa2EeymvfennQgseQ" upperBound="1"/>
+      <attributes xmi:id="_EGsiUCa3EeymvfennQgseQ" name="lastModified" type="_YcelICa2EeymvfennQgseQ" lowerBound="1" upperBound="1"/>
+      <attributes xmi:id="_HAEjMCa3EeymvfennQgseQ" name="contents" type="_aESQcCa2EeymvfennQgseQ" upperBound="-1"/>
+    </contains>
+    <contains xsi:type="uml:Class" xmi:id="_K2e0ECa3EeymvfennQgseQ" name="Diagnosis" superClasses="_AVOb0Ca3EeymvfennQgseQ">
+      <attributes xmi:id="_NAQkACa3EeymvfennQgseQ" name="icd10Code" type="_TjsRQCa2EeymvfennQgseQ" lowerBound="1" upperBound="1"/>
+      <attributes xmi:id="_PxxpYCa3EeymvfennQgseQ" name="shortDesc" type="_TjsRQCa2EeymvfennQgseQ" upperBound="1"/>
+    </contains>
+    <contains xsi:type="uml:Class" xmi:id="_WCgAkCa3EeymvfennQgseQ" name="Measurement" superClasses="_AVOb0Ca3EeymvfennQgseQ">
+      <attributes xmi:id="_YGDzwCa3EeymvfennQgseQ" name="code" type="_TjsRQCa2EeymvfennQgseQ" lowerBound="1" upperBound="1"/>
+      <attributes xmi:id="_aWV0UCa3EeymvfennQgseQ" name="value" type="_VzLnoCa2EeymvfennQgseQ" lowerBound="1" upperBound="1"/>
+      <attributes xmi:id="_cXz80Ca3EeymvfennQgseQ" name="unit" type="_TjsRQCa2EeymvfennQgseQ" lowerBound="1" upperBound="1"/>
+    </contains>
+    <contains xsi:type="uml:Class" xmi:id="_eeTIMCa3EeymvfennQgseQ" name="Physician">
+      <attributes xmi:id="_hezEwCa3EeymvfennQgseQ" name="specialization" type="_TjsRQCa2EeymvfennQgseQ" upperBound="1"/>
+      <attributes xmi:id="_kkoNQCa3EeymvfennQgseQ" name="id" type="_mWyj4Ca2EeymvfennQgseQ" lowerBound="1" upperBound="1"/>
+    </contains>
+    <contains xsi:type="uml:Association" xmi:id="_m_LkICa3EeymvfennQgseQ" name="address" owner="_haGAYCa2EeymvfennQgseQ" target="_xiwGACa2EeymvfennQgseQ" isDirected="true" ownerUpperBound="-1" targetLowerBound="1" targetUpperBound="-1"/>
+    <contains xsi:type="uml:Association" xmi:id="_tenswCa3EeymvfennQgseQ" name="patient" owner="_8GMPkCa2EeymvfennQgseQ" target="_haGAYCa2EeymvfennQgseQ" isDirected="true" ownerUpperBound="-1" targetLowerBound="1" targetUpperBound="1"/>
+    <contains xsi:type="uml:Association" xmi:id="_0pFIUCa3EeymvfennQgseQ" name="author" owner="_8GMPkCa2EeymvfennQgseQ" target="_eeTIMCa3EeymvfennQgseQ" isDirected="true" ownerUpperBound="-1" targetLowerBound="1" targetUpperBound="1"/>
+    <contains xsi:type="uml:Association" xmi:id="_4eFD8Ca3EeymvfennQgseQ" name="items" owner="_8GMPkCa2EeymvfennQgseQ" target="_AVOb0Ca3EeymvfennQgseQ" isDirected="true" ownerLowerBound="1" ownerUpperBound="1" targetUpperBound="-1"/>
+  </packages>
+</uml:Model>

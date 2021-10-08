@@ -1,0 +1,35 @@
+@namespace(
+	uri="https://ict.hvl.no/people/patrick-stunkel/metamodels/reqif",
+	prefix="reqif")
+package ReqIf;
+
+class ReqIfSpecification {
+	val SpecObjectType[*] specObjTypes;
+	val AttributeType[*] attributeTypes;
+	val SpecObject[1] specRoot;
+}
+
+class SpecObjectType {
+	attr EString[1] name ;
+}
+
+class AttributeType {
+	attr EString[1] name ;
+}
+
+
+class SpecObject {
+	attr EString[1] identifier;
+	ref SpecObjectType[?] type;
+	attr EString[1] title;
+	val SpecObject[*]#parent children;
+	ref SpecObject[?]#children parent;
+	val Attribute[*] attributes;
+}
+
+class Attribute {
+	attr EString[?] value;
+	ref AttributeType[1] type;
+}
+
+

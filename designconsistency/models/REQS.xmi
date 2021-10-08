@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ASCII"?>
+<reqif:ReqIfSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:reqif="https://ict.hvl.no/people/patrick-stunkel/metamodels/reqif" xmi:id="_Rh_DwCasEeymvfennQgseQ">
+  <specObjTypes xmi:id="_d6ss4CasEeymvfennQgseQ" name="FUNCTIONAL"/>
+  <specObjTypes xmi:id="_f80VoCasEeymvfennQgseQ" name="NON_FUNCTIONAL"/>
+  <attributeTypes xmi:id="_cIlPACasEeymvfennQgseQ" name="Status"/>
+  <specRoot xmi:id="_iNohsCasEeymvfennQgseQ" identifier="1" title="Patient Referral Specification">
+    <children xmi:id="_mqGF8CasEeymvfennQgseQ" identifier="1.1" type="_d6ss4CasEeymvfennQgseQ" title="Functional Requirements">
+      <children xmi:id="_s1BXICasEeymvfennQgseQ" identifier="1.1.1" type="_d6ss4CasEeymvfennQgseQ" title="The system must support sending electronic referrals">
+        <attributes xmi:id="_yaHXYCasEeymvfennQgseQ" value="accepted" type="_cIlPACasEeymvfennQgseQ"/>
+      </children>
+      <children xmi:id="_0wtbUCasEeymvfennQgseQ" identifier="1.1.1.1" type="_d6ss4CasEeymvfennQgseQ" title="The system must automatically create journal excerpts">
+        <attributes xmi:id="_4d--UCasEeymvfennQgseQ" value="accepted" type="_cIlPACasEeymvfennQgseQ"/>
+      </children>
+      <children xmi:id="_LkO2cCatEeymvfennQgseQ" identifier="1.1.2.1" type="_d6ss4CasEeymvfennQgseQ" title="The system should pick the consultant automatically">
+        <attributes xmi:id="_Pru3UCatEeymvfennQgseQ" value="rejected" type="_cIlPACasEeymvfennQgseQ"/>
+      </children>
+      <children xmi:id="_RJRzYCatEeymvfennQgseQ" identifier="1.1.2.2" type="_d6ss4CasEeymvfennQgseQ" title="The system should pickt the consultant semi-automatically">
+        <attributes xmi:id="_VxXY0CatEeymvfennQgseQ" value="proposed" type="_cIlPACasEeymvfennQgseQ"/>
+      </children>
+      <children xmi:id="_ZexesCatEeymvfennQgseQ" identifier="1.1.3" type="_d6ss4CasEeymvfennQgseQ" title="The system must support receiving electronic referrals">
+        <attributes xmi:id="_dLYTUCatEeymvfennQgseQ" value="accepted" type="_cIlPACasEeymvfennQgseQ"/>
+      </children>
+    </children>
+    <children xmi:id="_fiNn0CatEeymvfennQgseQ" identifier="1.2" type="_f80VoCasEeymvfennQgseQ" title="Non-Functional Requirements">
+      <children xmi:id="_igKmsCatEeymvfennQgseQ" type="_f80VoCasEeymvfennQgseQ" title="Referral information must be encrypted">
+        <attributes xmi:id="_lJ96gCatEeymvfennQgseQ" value="accepted" type="_cIlPACasEeymvfennQgseQ"/>
+      </children>
+    </children>
+  </specRoot>
+</reqif:ReqIfSpecification>

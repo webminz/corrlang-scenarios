@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<dmn:DecisionModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:dmn="https://ict.hvl.no/people/patrick-stunkel/metamodels/dmn" xmi:id="_R-p54CgmEeymvfennQgseQ">
+  <decisionTables xmi:id="_XjZ74CgmEeymvfennQgseQ" name="Select Consultant">
+    <inputSideColumns xmi:id="_ZRBUQCgmEeymvfennQgseQ" name="Diagnosis" type="_SwUnYCgmEeymvfennQgseQ"/>
+    <inputSideColumns xmi:id="_bIDuYCgmEeymvfennQgseQ" name="Postal Code" type="_UpHVACgmEeymvfennQgseQ"/>
+    <outputSideColumns xmi:id="_cwfEwCgmEeymvfennQgseQ" name="Practicioner ID" type="_WKAgACgmEeymvfennQgseQ"/>
+    <outputSideColumns xmi:id="_erkRYCgmEeymvfennQgseQ" name="Specialization" type="_SwUnYCgmEeymvfennQgseQ"/>
+    <rows xmi:id="_gvuhgCgmEeymvfennQgseQ">
+      <cells xmi:id="_hRd8oCgmEeymvfennQgseQ" valueExpression="Essential Hypertension" column="_ZRBUQCgmEeymvfennQgseQ"/>
+      <cells xmi:id="_kLPmICgmEeymvfennQgseQ" valueExpression="5...." column="_bIDuYCgmEeymvfennQgseQ"/>
+      <cells xmi:id="_mkumACgmEeymvfennQgseQ" valueExpression="123 456 789" column="_cwfEwCgmEeymvfennQgseQ"/>
+      <cells xmi:id="_pJfo0CgmEeymvfennQgseQ" valueExpression="Cardiology" column="_erkRYCgmEeymvfennQgseQ"/>
+    </rows>
+    <rows xmi:id="_rYHcgCgmEeymvfennQgseQ">
+      <cells xmi:id="_J6is8Cg7EeymvfennQgseQ" valueExpression="Bacterial Meningitis" column="_ZRBUQCgmEeymvfennQgseQ"/>
+      <cells xmi:id="_NVCd4Cg7EeymvfennQgseQ" valueExpression="5...." column="_bIDuYCgmEeymvfennQgseQ"/>
+      <cells xmi:id="_PN8gQCg7EeymvfennQgseQ" valueExpression="911 113 112" column="_cwfEwCgmEeymvfennQgseQ"/>
+      <cells xmi:id="_RiU9sCg7EeymvfennQgseQ" valueExpression="Neurology" column="_erkRYCgmEeymvfennQgseQ"/>
+    </rows>
+    <rows xmi:id="_T0TnYCg7EeymvfennQgseQ">
+      <cells xmi:id="_UZCFECg7EeymvfennQgseQ" valueExpression="Complicated Migraine" column="_ZRBUQCgmEeymvfennQgseQ"/>
+      <cells xmi:id="_W6gjUCg7EeymvfennQgseQ" valueExpression="5[1-3]..." column="_bIDuYCgmEeymvfennQgseQ"/>
+      <cells xmi:id="_ZP6UcCg7EeymvfennQgseQ" valueExpression="420 023 007" column="_cwfEwCgmEeymvfennQgseQ"/>
+      <cells xmi:id="_cE1TICg7EeymvfennQgseQ" valueExpression="Internal Medicine" column="_erkRYCgmEeymvfennQgseQ"/>
+    </rows>
+    <rows xmi:id="_eFSvACg7EeymvfennQgseQ">
+      <cells xmi:id="_eqyBsCg7EeymvfennQgseQ" valueExpression="Complicated Migraine" column="_ZRBUQCgmEeymvfennQgseQ"/>
+      <cells xmi:id="_K90gIChBEeymvfennQgseQ" valueExpression="5[4-9]..." column="_bIDuYCgmEeymvfennQgseQ"/>
+      <cells xmi:id="_NRDuEChBEeymvfennQgseQ" valueExpression="987 654 321" column="_cwfEwCgmEeymvfennQgseQ"/>
+      <cells xmi:id="_P_vh4ChBEeymvfennQgseQ" valueExpression="Neurology" column="_erkRYCgmEeymvfennQgseQ"/>
+    </rows>
+    <rows xmi:id="_UaAGsChBEeymvfennQgseQ">
+      <cells xmi:id="_U8nEgChBEeymvfennQgseQ" valueExpression="Atopic Dermatitis" column="_ZRBUQCgmEeymvfennQgseQ"/>
+      <cells xmi:id="_W6hisChBEeymvfennQgseQ" valueExpression="5...." column="_bIDuYCgmEeymvfennQgseQ"/>
+      <cells xmi:id="_YgQKYChBEeymvfennQgseQ" valueExpression="690 046 046" column="_cwfEwCgmEeymvfennQgseQ"/>
+      <cells xmi:id="_a8rJgChBEeymvfennQgseQ" valueExpression="Dermatology" column="_erkRYCgmEeymvfennQgseQ"/>
+    </rows>
+  </decisionTables>
+  <columnTypes xmi:id="_SwUnYCgmEeymvfennQgseQ" name="string"/>
+  <columnTypes xmi:id="_UpHVACgmEeymvfennQgseQ" name="regex"/>
+  <columnTypes xmi:id="_WKAgACgmEeymvfennQgseQ" name="id"/>
+</dmn:DecisionModel>
